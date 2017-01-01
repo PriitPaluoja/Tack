@@ -1,5 +1,6 @@
 package ee.ticktacktoeu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,9 +26,14 @@ public class Board {
         board.put(new Coordinate(2, 2), Token.FREE);
     }
 
-    public void play(Token player, Coordinate coordinate) {
-        board.put(coordinate, player);
+    public List<Coordinate> getAvailableMoves() {
+        return getCoordinatesByPlayer(Token.FREE);
+    }
 
+
+    public void play(Token player, Coordinate coordinate) {
+        if(board.get(coordinate)!= Token.FREE) throw new IllegalArgumentException();
+        board.put(coordinate, player);
         if (hasPlayerWon(player)) {
             winner = player;
             hasWon = true;
@@ -55,16 +61,34 @@ public class Board {
     }
 
     public List<Token> getRow(int rowNr) {
-        return Arrays.asList(board.get(new Coordinate(rowNr, 0)),
+        return Arrays.asList(
+                board.get(new Coordinate(rowNr, 0)),
                 board.get(new Coordinate(rowNr, 1)),
                 board.get(new Coordinate(rowNr, 2))
         );
     }
 
     public List<Token> getCol(int colNr) {
-        return Arrays.asList(board.get(new Coordinate(0, colNr)),
+        return Arrays.asList(
+                board.get(new Coordinate(0, colNr)),
                 board.get(new Coordinate(1, colNr)),
                 board.get(new Coordinate(2, colNr))
         );
+    }
+
+    public List<Coordinate> getCoordinatesByPlayer(Token player){
+        List<Coordinate> out = new ArrayList<>();
+        for (Coordinate c : board.keySet())
+            if (board.get(c) == player) out.add(c);
+        return out;
+    }
+
+
+    public List<Token> getDiag(int nr) {
+        if (nr == 1)
+            return Arrays.asList(board.get(new Coordinate(0, 0)), board.get(new Coordinate(1, 1)), board.get(new Coordinate(2, 2)));
+        else if (nr == 2)
+            return Arrays.asList(board.get(new Coordinate(2, 0)), board.get(new Coordinate(1, 1)), board.get(new Coordinate(0, 2)));
+        else throw new RuntimeException();
     }
 }

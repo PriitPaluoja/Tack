@@ -29,15 +29,11 @@ public class Coordinate {
         return result;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    public int[] getCoordinates() {
-        return new int[]{row, col};
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "row=" + row +
+                ", col=" + col +
+                '}';
     }
 }
