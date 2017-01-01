@@ -36,8 +36,7 @@ public class GameActivity extends AppCompatActivity {
         mPlayer2Counter = 0;
         player = Token.PLAYER_1;
         multiplayer = true;
-        ai = new TickTackToeAI();
-        board = new Board();
+
 
         mScore1TextView = (TextView) findViewById(R.id.score1);
         mScore2TextView = (TextView) findViewById(R.id.score2);
@@ -54,6 +53,17 @@ public class GameActivity extends AppCompatActivity {
         mButtonCoordinateMap.put((Button) findViewById(R.id.b6), new Coordinate(2, 0));
         mButtonCoordinateMap.put((Button) findViewById(R.id.b7), new Coordinate(2, 1));
         mButtonCoordinateMap.put((Button) findViewById(R.id.b8), new Coordinate(2, 2));
+
+        mCoordinateButtonMap = new HashMap<>();
+        mCoordinateButtonMap.put(new Coordinate(0, 0),(Button) findViewById(R.id.b0));
+        mCoordinateButtonMap.put(new Coordinate(0, 1),(Button) findViewById(R.id.b1));
+        mCoordinateButtonMap.put(new Coordinate(0, 2),(Button) findViewById(R.id.b2));
+        mCoordinateButtonMap.put(new Coordinate(1, 0),(Button) findViewById(R.id.b3));
+        mCoordinateButtonMap.put(new Coordinate(1, 1),(Button) findViewById(R.id.b4));
+        mCoordinateButtonMap.put(new Coordinate(1, 2),(Button) findViewById(R.id.b5));
+        mCoordinateButtonMap.put(new Coordinate(2, 0),(Button) findViewById(R.id.b6));
+        mCoordinateButtonMap.put(new Coordinate(2, 1),(Button) findViewById(R.id.b7));
+        mCoordinateButtonMap.put(new Coordinate(2, 2),(Button) findViewById(R.id.b8));
 
 
 
@@ -89,6 +99,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startNewGame() {
+        ai = new TickTackToeAI();
+        board = new Board();
         for (final Button b : mButtonCoordinateMap.keySet()) {
             b.setEnabled(true);
             b.setText("");
@@ -123,7 +135,11 @@ public class GameActivity extends AppCompatActivity {
 
 
         if (!multiplayer) {
-            board.play(player, ai.getBestMove(board, player));
+            Coordinate aiMove = ai.getBestMove(board, player);
+            Button b = mCoordinateButtonMap.get(aiMove);
+            b.setEnabled(false);
+            b.setText(player == Token.PLAYER_1 ? SEPARATOR_1 : SEPARATOR_2);
+            board.play(player, aiMove);
             if(board.hasSomebodyWon()){
                 mWinTextView.setText(board.getWinnerText());
             }
