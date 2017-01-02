@@ -12,27 +12,41 @@
 
     tools:context="ee.ticktacktoeu.GameActivity">
 
+    <Button
+        android:id="@+id/new_game"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game" />
+
+    <Button
+        android:id="@+id/multi"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/multiplayer" />
+
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <TextView
-            android:text="SCORE1"
+            android:id="@+id/score1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/score1" />
+            android:text="SCORE1" />
 
         <TextView
-            android:text="SCORE2"
+            android:id="@+id/score2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/score2" />
+            android:text="SCORE2" />
 
         <CheckedTextView
-            android:text="TURN"
+            android:id="@+id/turn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/turn" />
+            android:text="TURN" />
     </TableRow>
 
     <TableRow
@@ -49,24 +63,19 @@
 
         <Button
             android:id="@+id/b1"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B2"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B2" />
 
         <Button
             android:id="@+id/b2"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B3"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B3" />
 
-        <Button
-            android:text="@string/new_game"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/new_game"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
     </TableRow>
 
     <TableRow
@@ -75,31 +84,26 @@
 
         <Button
             android:id="@+id/b3"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B4"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B4" />
 
         <Button
             android:id="@+id/b4"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B5"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B5" />
 
         <Button
             android:id="@+id/b5"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B6"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B6" />
 
-        <Button
-            android:text="@string/multiplayer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/multi"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
     </TableRow>
 
     <TableRow
@@ -108,43 +112,31 @@
 
         <Button
             android:id="@+id/b6"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B7"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B7" />
 
         <Button
             android:id="@+id/b7"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B8"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B8" />
 
         <Button
             android:id="@+id/b8"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B9"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:text="B9" />
 
-        <Button
-            android:text="@string/statistics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/statistics"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
     </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/win_info"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-    </TableRow>
+    <TextView
+        android:id="@+id/win_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </TableLayout>
 

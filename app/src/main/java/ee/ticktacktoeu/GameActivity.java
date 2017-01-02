@@ -155,6 +155,7 @@ public class GameActivity extends AppCompatActivity {
         if (winControlOperations()) return;
 
         button.setEnabled(false);
+        button.setTextColor(Color.BLACK);
         button.setText(getSeparator(player));
         board.play(player, mButtonCoordinateMap.get(button));
 
@@ -166,7 +167,9 @@ public class GameActivity extends AppCompatActivity {
             Button b = mCoordinateButtonMap.get(aiMove);
             b.setEnabled(false);
             b.setText(getSeparator(player));
+            b.setTextColor(Color.BLACK);
             board.play(player, aiMove);
+
 
             if (winControlOperations())
                 return;
