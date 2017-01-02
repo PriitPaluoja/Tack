@@ -1,11 +1,13 @@
 package ee.ticktacktoeu;
 
 
-public class Coordinate {
+import java.io.Serializable;
+
+class Coordinate implements Serializable {
     private final int row;
     private final int col;
 
-    public Coordinate(int row, int col) {
+    Coordinate(int row, int col) {
         this.row = row;
         this.col = col;
     }
@@ -16,9 +18,7 @@ public class Coordinate {
         if (o == null || getClass() != o.getClass()) return false;
 
         Coordinate that = (Coordinate) o;
-
-        if (row != that.row) return false;
-        return col == that.col;
+        return row == that.row && col == that.col;
 
     }
 
@@ -27,13 +27,5 @@ public class Coordinate {
         int result = row;
         result = 31 * result + col;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Coordinate{" +
-                "row=" + row +
-                ", col=" + col +
-                '}';
     }
 }

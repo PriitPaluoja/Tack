@@ -9,12 +9,12 @@ public class TickTackToeAI {
 
     private final Random random;
 
-    public TickTackToeAI() {
+    TickTackToeAI() {
         random = new Random();
     }
 
 
-    public Coordinate getBestMove(Board board, Token player) {
+    Coordinate getBestMove(Board board, Token player) {
         List<Coordinate> moves;
 
         //1. If the player has two in a row, they can place a third to get three in a row.
@@ -129,36 +129,17 @@ public class TickTackToeAI {
     }
 
     private List<Coordinate> getForkMoves(Token player, Board board) {
-        List<Coordinate> out = new ArrayList<>();
+        Board copyBoard;
 
-        for (int i = 0; i < 3; i++) {
-            List<Token> row = board.getRow(i);
-            List<Token> col = board.getCol(i);
+        List<Coordinate> bestOut = new ArrayList<>();
 
-            if (Collections.frequency(row, Token.FREE) == 2 && row.contains(player))
-                out.add(new Coordinate(i, row.indexOf(Token.FREE)));
+        for (Coordinate c : board.getAvailableMoves()) {
+            copyBoard = board.copy();
+            copyBoard.play(player, c);
+            if (getNextWin(player, copyBoard).size() >= 2) bestOut.add(c);
 
-            if (Collections.frequency(col, Token.FREE) == 2 && col.contains(player))
-                out.add(new Coordinate(col.indexOf(Token.FREE), i));
         }
-
-        List<Token> diag1 = board.getDiag(1);
-        if (Collections.frequency(diag1, Token.FREE) == 2 && diag1.contains(player)) {
-            int index = diag1.indexOf(Token.FREE);
-            out.add(new Coordinate(index, index));
-        }
-
-        List<Token> diag2 = board.getDiag(1);
-        if (Collections.frequency(diag2, Token.FREE) == 2 && diag2.contains(player)) {
-            int pos = diag2.indexOf(Token.FREE);
-            if (pos == 1)
-                out.add(new Coordinate(1, 1));
-            else if (pos == 0)
-                out.add(new Coordinate(2, 0));
-            else
-                out.add(new Coordinate(0, 2));
-        }
-        return out;
+        return bestOut;
     }
 
 

@@ -1,5 +1,6 @@
 package ee.ticktacktoeu;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,19 +14,21 @@ public class GameActivity extends AppCompatActivity {
 
     private final static String SEPARATOR_1 = "X";
     private final static String SEPARATOR_2 = "O";
+    private Map<Coordinate, Button> mCoordinateButtonMap;
     private Map<Button, Coordinate> mButtonCoordinateMap;
-    private Button mNewGameButton;
-    private Button mMultiPlayerButton;
     private TextView mScore1TextView;
     private TextView mScore2TextView;
     private TextView mTurnTextView;
     private int mPlayer1Counter;
     private int mPlayer2Counter;
+
+
     private Token player;
     private boolean multiplayer;
     private TickTackToeAI ai;
     private Board board;
     private TextView mWinTextView;
+    private boolean isGameOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
         mPlayer1Counter = 0;
         mPlayer2Counter = 0;
         multiplayer = false;
+        isGameOn = true;
 
 
         mScore1TextView = (TextView) findViewById(R.id.score1);
@@ -53,8 +57,20 @@ public class GameActivity extends AppCompatActivity {
         mButtonCoordinateMap.put((Button) findViewById(R.id.b8), new Coordinate(2, 2));
 
 
-        mNewGameButton = (Button) findViewById(R.id.new_game);
-        mMultiPlayerButton = (Button) findViewById(R.id.multi);
+        mCoordinateButtonMap = new HashMap<>();
+        mCoordinateButtonMap.put(new Coordinate(0, 0), (Button) findViewById(R.id.b0));
+        mCoordinateButtonMap.put(new Coordinate(0, 1), (Button) findViewById(R.id.b1));
+        mCoordinateButtonMap.put(new Coordinate(0, 2), (Button) findViewById(R.id.b2));
+        mCoordinateButtonMap.put(new Coordinate(1, 0), (Button) findViewById(R.id.b3));
+        mCoordinateButtonMap.put(new Coordinate(1, 1), (Button) findViewById(R.id.b4));
+        mCoordinateButtonMap.put(new Coordinate(1, 2), (Button) findViewById(R.id.b5));
+        mCoordinateButtonMap.put(new Coordinate(2, 0), (Button) findViewById(R.id.b6));
+        mCoordinateButtonMap.put(new Coordinate(2, 1), (Button) findViewById(R.id.b7));
+        mCoordinateButtonMap.put(new Coordinate(2, 2), (Button) findViewById(R.id.b8));
+
+
+        Button mNewGameButton = (Button) findViewById(R.id.new_game);
+        Button mMultiPlayerButton = (Button) findViewById(R.id.multi);
 
         mNewGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,25 +83,28 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 multiplayer = !multiplayer;
-                mScore1TextView.setText(Integer.toString(0));
-                mScore2TextView.setText(Integer.toString(0));
+                mScore1TextView.setText(String.valueOf(0));
+                mScore2TextView.setText(String.valueOf(0));
                 startNewGame();
             }
         });
 
 
-        mScore1TextView.setText(Integer.toString(mPlayer1Counter));
-        mScore2TextView.setText(Integer.toString(mPlayer2Counter));
-        mTurnTextView.setText(Token.PLAYER_1.name());
+        mScore1TextView.setText(String.valueOf(mPlayer1Counter));
+        mScore2TextView.setText(String.valueOf(mPlayer2Counter));
+        mTurnTextView.setText(getSeparator(player));
         startNewGame();
     }
 
     private void startNewGame() {
+        mWinTextView.setText("");
+        isGameOn = true;
         player = Token.PLAYER_1;
         ai = new TickTackToeAI();
         board = new Board();
         for (final Button b : mButtonCoordinateMap.keySet()) {
             b.setEnabled(true);
+            b.setTextColor(Color.LTGRAY);
             b.setText("");
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,43 +113,67 @@ public class GameActivity extends AppCompatActivity {
                 }
             });
         }
-        mTurnTextView.setText(player.name());
+        mTurnTextView.setText(getSeparator(player));
     }
 
 
-    private void play(Button button) {
-        if (board.hasSomebodyWon()) {
-            return;
+    private boolean winControlOperations() {
+        Boolean won = board.hasSomebodyWon();
+
+        if (isGameOn && won) {
+            for (Coordinate c : board.getWinningRow(player)) {
+                mCoordinateButtonMap.get(c).setTextColor(Color.GREEN);
+            }
+
+            isGameOn = false;
+            Token winner = board.getWinner();
+            mWinTextView.setText(getSeparator(winner));
+            switch (winner) {
+                case PLAYER_1:
+                    mPlayer1Counter++;
+                    mScore1TextView.setText(String.valueOf(mPlayer1Counter));
+                    break;
+                case PLAYER_2:
+                    mPlayer2Counter++;
+                    mScore2TextView.setText(String.valueOf(mPlayer2Counter));
+                    break;
+            }
         }
+        return won;
+    }
+
+    private String getSeparator(Token player) {
+        if(player == Token.FREE)return "-";
+        return player == Token.PLAYER_1 ? SEPARATOR_1 : SEPARATOR_2;
+    }
+
+    private void switchPlayer() {
+        player = player == Token.PLAYER_1 ? Token.PLAYER_2 : Token.PLAYER_1;
+    }
+
+    private void play(Button button) {
+        if (winControlOperations()) return;
 
         button.setEnabled(false);
-        button.setText(player == Token.PLAYER_1 ? SEPARATOR_1 : SEPARATOR_2);
+        button.setText(getSeparator(player));
         board.play(player, mButtonCoordinateMap.get(button));
 
-        if (board.hasSomebodyWon()) {
-            mWinTextView.setText(player.name());
-            return;
-        }
-
+        if (winControlOperations()) return;
+        switchPlayer();
 
         if (!multiplayer) {
-            Coordinate aiMove = ai.getBestMove(board, Token.PLAYER_2);
+            Coordinate aiMove = ai.getBestMove(board, player);
+            Button b = mCoordinateButtonMap.get(aiMove);
+            b.setEnabled(false);
+            b.setText(getSeparator(player));
+            board.play(player, aiMove);
 
+            if (winControlOperations())
+                return;
+            switchPlayer();
 
-            for (Button b : mButtonCoordinateMap.keySet()) {
-                if (mButtonCoordinateMap.get(b).equals(aiMove)) {
-                    b.setEnabled(false);
-                    b.setText(SEPARATOR_2);
-                    board.play(Token.PLAYER_2, aiMove);
-                    if (board.hasSomebodyWon()) {
-                        mWinTextView.setText(Token.PLAYER_2.name());
-                    }
-                    break;
-                }
-            }
         } else {
-            player = player == Token.PLAYER_1 ? Token.PLAYER_2 : Token.PLAYER_1;
-            mTurnTextView.setText(player.name());
+            mTurnTextView.setText(getSeparator(player));
         }
     }
 }
