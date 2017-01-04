@@ -1,142 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-
+    android:orientation="vertical"
+    android:weightSum="3"
     tools:context="ee.ticktacktoeu.GameActivity">
-
-    <Button
-        android:id="@+id/new_game"
+    <Button android:id="@+id/new_game"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/new_game" />
-
-    <Button
-        android:id="@+id/multi"
+    <Button android:id="@+id/multi"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/multiplayer" />
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <TextView
             android:id="@+id/score1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="SCORE1" />
-
         <TextView
             android:id="@+id/score2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:text="SCORE2" />
-
         <CheckedTextView
             android:id="@+id/turn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TURN" />
-    </TableRow>
-
-    <TableRow
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/b0"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B1" />
-
-        <Button
-            android:id="@+id/b1"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B2" />
-
-        <Button
-            android:id="@+id/b2"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B3" />
-
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/b3"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B4" />
-
-        <Button
-            android:id="@+id/b4"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B5" />
-
-        <Button
-            android:id="@+id/b5"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B6" />
-
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/b6"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B7" />
-
-        <Button
-            android:id="@+id/b7"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B8" />
-
-        <Button
-            android:id="@+id/b8"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B9" />
-
-    </TableRow>
     <TextView
         android:id="@+id/win_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-</TableLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <Button android:id="@+id/b0"
+            style="@style/GridButton"
+            android:text="B1"/>
+        <Button android:id="@+id/b1"
+            style="@style/GridButton"
+            android:text="B2"/>
+        <Button android:id="@+id/b2"
+            style="@style/GridButton"
+            android:text="B3"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <Button android:id="@+id/b3"
+            style="@style/GridButton"
+            android:text="B4"/>
+        <Button android:id="@+id/b4"
+            style="@style/GridButton"
+            android:text="B5"/>
+        <Button android:id="@+id/b5"
+            style="@style/GridButton"
+            android:text="B6"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <Button android:id="@+id/b6"
+            style="@style/GridButton"
+            android:text="B7"/>
+        <Button android:id="@+id/b7"
+            style="@style/GridButton"
+            android:text="B8"/>
+        <Button android:id="@+id/b8"
+            style="@style/GridButton"
+            android:text="B9"/>
+    </LinearLayout>
+</LinearLayout>
 
