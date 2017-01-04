@@ -169,7 +169,7 @@ public class TickTackToeAI {
             out.add(new Coordinate(index, index));
         }
 
-        List<Token> diag2 = board.getDiag(1);
+        List<Token> diag2 = board.getDiag(2);
         if (Collections.frequency(diag2, player) == 2 && diag2.contains(Token.FREE)) {
             int pos = diag2.indexOf(Token.FREE);
             if (pos == 1)
